@@ -1,34 +1,30 @@
 'use cache'
 
-import type { Event } from '@/types'
 import HomeClient from '@/app/[locale]/(platform)/(home)/_components/HomeClient'
 import { EventRepository } from '@/lib/db/queries/event'
 
 export default async function HomePage() {
-  let initialEvents: Event[] = []
+  const [trendingRes, basketballRes, hockeyRes] = await Promise.all([
+    EventRepository.listEvents({ tag: 'trending' }),
+    EventRepository.listEvents({ tag: 'basketball' }),
+    EventRepository.listEvents({ tag: 'hockey' }),
+  ])
 
-  try {
-    const { data: events, error } = await EventRepository.listEvents({
-      tag: 'trending',
-      search: '',
-      userId: '',
-      bookmarked: false,
-    })
+  const trendingEvents = trendingRes.data ?? []
+  const basketballEvents = basketballRes.data ?? []
+  const hockeyEvents = hockeyRes.data ?? []
 
-    if (error) {
-      console.warn('Failed to fetch initial events for static generation:', error)
-    }
-    else {
-      initialEvents = events ?? []
-    }
-  }
-  catch {
-    initialEvents = []
-  }
+  // Use top 5 trending events for the slider
+  const featuredEvents = trendingEvents.slice(0, 5)
 
   return (
-    <main className="container grid gap-4 py-4">
-      <HomeClient initialEvents={initialEvents} />
+    <main className="container py-4">
+      <HomeClient
+        featuredEvents={featuredEvents}
+        basketballEvents={basketballEvents}
+        hockeyEvents={hockeyEvents}
+        trendingEvents={trendingEvents}
+      />
     </main>
   )
 }

@@ -1,28 +1,21 @@
 import type { Route } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
-import { svgLogo } from '@/lib/utils'
 
-export default async function HeaderLogo() {
-  const siteName = process.env.NEXT_PUBLIC_SITE_NAME
-  const logoSvg = svgLogo()
-
+export default function HeaderLogo() {
   return (
     <Link
       href={'/' as Route}
-      className={`
-        flex shrink-0 items-center gap-2 text-2xl font-bold text-foreground transition-opacity
-        hover:opacity-80
-      `}
+      className="flex shrink-0 items-center transition-opacity hover:opacity-80"
     >
-      <div
-        className={`
-          size-[1em] text-current
-          [&_svg]:h-[1em] [&_svg]:w-[1em]
-          [&_svg_*]:fill-current [&_svg_*]:stroke-current
-        `}
-        dangerouslySetInnerHTML={{ __html: logoSvg! }}
+      <Image
+        src="/images/logo.png"
+        alt="BABA MARKETS"
+        width={200}
+        height={40}
+        priority
+        className="h-8 w-auto"
       />
-      <span>{siteName}</span>
     </Link>
   )
 }
