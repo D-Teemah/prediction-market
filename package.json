@@ -17,6 +17,7 @@
     "test": "vitest run",
     "test:e2e": "npx playwright test",
     "test:unit": "vitest run",
+    "seed": "NEXT_PUBLIC_REOWN_APPKIT_PROJECT_ID=mock-id npx tsx src/scripts/seed-events.ts",
     "prepare": "husky",
     "db:push": "node supabase/migrate.js"
   },

@@ -1,3 +1,4 @@
+import { CopyrightYear } from '@/components/CopyrightYear'
 import { Link } from '@/i18n/navigation'
 
 export function Footer() {
@@ -42,7 +43,9 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
           <p>
-            © 2025
+            ©
+            {' '}
+            <CopyrightYear />
             {' '}
             {process.env.NEXT_PUBLIC_SITE_NAME}
             . All rights reserved.

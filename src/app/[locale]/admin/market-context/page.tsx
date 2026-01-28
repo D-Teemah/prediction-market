@@ -1,5 +1,6 @@
 'use cache'
 
+import { Suspense } from 'react'
 import AdminMarketContextSettingsForm from '@/app/[locale]/admin/market-context/_components/AdminMarketContextSettingsForm'
 import { parseMarketContextSettings } from '@/lib/ai/market-context-config'
 import { MARKET_CONTEXT_VARIABLES } from '@/lib/ai/market-context-template'
@@ -46,15 +47,17 @@ export default async function AdminMarketContextSettingsPage() {
         </p>
       </div>
 
-      <AdminMarketContextSettingsForm
-        defaultPrompt={defaultPrompt}
-        variables={MARKET_CONTEXT_VARIABLES}
-        models={modelOptions}
-        defaultModel={defaultModel}
-        isEnabled={isEnabled}
-        isModelSelectEnabled={isModelSelectEnabled}
-        modelsError={modelsError}
-      />
+      <Suspense fallback={<div className="h-[500px] w-full max-w-3xl animate-pulse rounded-lg border bg-muted/10" />}>
+        <AdminMarketContextSettingsForm
+          defaultPrompt={defaultPrompt}
+          variables={MARKET_CONTEXT_VARIABLES}
+          models={modelOptions}
+          defaultModel={defaultModel}
+          isEnabled={isEnabled}
+          isModelSelectEnabled={isModelSelectEnabled}
+          modelsError={modelsError}
+        />
+      </Suspense>
     </section>
   )
 }

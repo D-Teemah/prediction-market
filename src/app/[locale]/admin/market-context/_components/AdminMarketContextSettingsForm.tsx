@@ -2,7 +2,6 @@
 
 import type { MarketContextVariable } from '@/lib/ai/market-context-template'
 import { RefreshCwIcon } from 'lucide-react'
-import Form from 'next/form'
 import { useActionState, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { updateMarketContextSettingsAction } from '@/app/[locale]/admin/market-context/_actions/update-market-context-settings'
@@ -155,7 +154,7 @@ export default function AdminMarketContextSettingsForm({
   }
 
   return (
-    <Form action={formAction} className="grid max-w-3xl gap-8">
+    <form action={formAction} className="grid max-w-3xl gap-8">
       <input type="hidden" name="openrouter_model" value={modelValue} />
       <input type="hidden" name="openrouter_enabled" value={enabled ? 'true' : 'false'} />
 
@@ -330,6 +329,6 @@ export default function AdminMarketContextSettingsForm({
           {isPending ? 'Saving...' : 'Save changes'}
         </Button>
       </div>
-    </Form>
+    </form>
   )
 }
