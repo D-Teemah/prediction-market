@@ -17,7 +17,9 @@ export default async function PlatformLayout({ children }: LayoutProps<'/[locale
           <Suspense fallback={<div className="h-12 border-b" />}>
             <NavigationTabs />
           </Suspense>
-          {children}
+          <Suspense fallback={null}>
+            {children}
+          </Suspense>
           <AffiliateQueryHandler />
         </FilterProvider>
       </TradingOnboardingProvider>
