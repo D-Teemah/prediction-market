@@ -2,9 +2,11 @@ import type { Metadata, Viewport } from 'next'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
+import { Suspense } from 'react'
+import { Footer } from '@/components/Footer'
 import TestModeBanner from '@/components/TestModeBanner'
 import { routing } from '@/i18n/routing'
-import { openSauceOne } from '@/lib/fonts'
+import { spaceGrotesk } from '@/lib/fonts'
 import { IS_TEST_MODE } from '@/lib/network'
 import { svgLogoUri } from '@/lib/utils'
 import '../globals.css'
@@ -43,11 +45,14 @@ export default async function LocaleLayout({ params, children }: LayoutProps<'/[
   setRequestLocale(locale)
 
   return (
-    <html lang={locale} className={`${openSauceOne.variable}`} suppressHydrationWarning>
+    <html lang={locale} className={`${spaceGrotesk.variable}`} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col font-sans antialiased">
         <NextIntlClientProvider>
           {IS_TEST_MODE && <TestModeBanner />}
           {children}
+          <Suspense fallback={null}>
+            <Footer />
+          </Suspense>
         </NextIntlClientProvider>
       </body>
     </html>

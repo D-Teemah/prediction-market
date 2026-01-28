@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import AffiliateQueryHandler from '@/app/[locale]/(platform)/_components/AffiliateQueryHandler'
 import Header from '@/app/[locale]/(platform)/_components/Header'
 import NavigationTabs from '@/app/[locale]/(platform)/_components/NavigationTabs'
@@ -10,8 +11,12 @@ export default async function PlatformLayout({ children }: LayoutProps<'/[locale
     <AppProviders>
       <TradingOnboardingProvider>
         <FilterProvider>
-          <Header />
-          <NavigationTabs />
+          <Suspense fallback={<div className="h-14" />}>
+            <Header />
+          </Suspense>
+          <Suspense fallback={<div className="h-12 border-b" />}>
+            <NavigationTabs />
+          </Suspense>
           {children}
           <AffiliateQueryHandler />
         </FilterProvider>
