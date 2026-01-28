@@ -25,6 +25,12 @@ if (!process.env.POSTGRES_URL) {
   }
 }
 
+// Prefer non-pooling URL for seeding if available
+if (process.env.POSTGRES_URL_NON_POOLING) {
+  console.log('Using POSTGRES_URL_NON_POOLING for seeding...')
+  process.env.POSTGRES_URL = process.env.POSTGRES_URL_NON_POOLING
+}
+
 if (!process.env.POSTGRES_URL) {
   console.error('❌ POSTGRES_URL not found in environment variables')
   process.exit(1)
