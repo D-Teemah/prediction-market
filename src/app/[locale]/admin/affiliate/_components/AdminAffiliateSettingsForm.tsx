@@ -1,6 +1,5 @@
 'use client'
 
-import Form from 'next/form'
 import { useActionState, useEffect, useRef } from 'react'
 import { toast } from 'sonner'
 import { updateForkSettingsAction } from '@/app/[locale]/admin/affiliate/_actions/update-affiliate-settings'
@@ -44,7 +43,7 @@ export default function AdminAffiliateSettingsForm({
   }, [isPending, state.error])
 
   return (
-    <Form action={formAction} className="grid gap-6 rounded-lg border p-6">
+    <form action={formAction} className="grid gap-6 rounded-lg border p-6">
       <div>
         <h2 className="text-xl font-semibold">Trading Fees</h2>
         <p className="text-sm text-muted-foreground">
@@ -102,6 +101,6 @@ export default function AdminAffiliateSettingsForm({
       <Button type="submit" className="ms-auto w-40" disabled={isPending}>
         {isPending ? 'Saving...' : 'Save changes'}
       </Button>
-    </Form>
+    </form>
   )
 }
