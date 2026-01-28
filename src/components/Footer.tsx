@@ -1,3 +1,4 @@
+import { CopyrightYear } from '@/components/CopyrightYear'
 import { Link } from '@/i18n/navigation'
 
 export function Footer() {
@@ -44,7 +45,7 @@ export function Footer() {
           <p>
             ©
             {' '}
-            {new Date().getFullYear()}
+            <CopyrightYear />
             {' '}
             {process.env.NEXT_PUBLIC_SITE_NAME}
             . All rights reserved.
