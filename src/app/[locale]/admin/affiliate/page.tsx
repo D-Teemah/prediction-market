@@ -1,5 +1,6 @@
 'use cache'
 
+import { Suspense } from 'react'
 import AdminAffiliateOverview from '@/app/[locale]/admin/affiliate/_components/AdminAffiliateOverview'
 import AdminAffiliateSettingsForm from '@/app/[locale]/admin/affiliate/_components/AdminAffiliateSettingsForm'
 import { baseUnitsToNumber, fetchFeeReceiverTotals, sumFeeTotalsByToken } from '@/lib/data-api/fees'
@@ -131,12 +132,14 @@ export default async function AdminSettingsPage() {
   return (
     <>
       <section className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-        <AdminAffiliateSettingsForm
-          tradeFeeBps={Number.parseInt(affiliateSettings?.trade_fee_bps?.value || '100', 10)}
-          affiliateShareBps={Number.parseInt(affiliateSettings?.affiliate_share_bps?.value || '5000', 10)}
-          minTradeFeeBps={exchangeBaseFeeBps ?? 0}
-          updatedAtLabel={updatedAtLabel}
-        />
+        <Suspense fallback={<div className="h-[300px] animate-pulse rounded-lg border bg-muted/10" />}>
+          <AdminAffiliateSettingsForm
+            tradeFeeBps={Number.parseInt(affiliateSettings?.trade_fee_bps?.value || '100', 10)}
+            affiliateShareBps={Number.parseInt(affiliateSettings?.affiliate_share_bps?.value || '5000', 10)}
+            minTradeFeeBps={exchangeBaseFeeBps ?? 0}
+            updatedAtLabel={updatedAtLabel}
+          />
+        </Suspense>
         <div className="grid gap-4 rounded-lg border p-6">
           <div>
             <h2 className="text-xl font-semibold">Totals</h2>
