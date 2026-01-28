@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
+import { Suspense } from 'react'
 import { Footer } from '@/components/Footer'
 import TestModeBanner from '@/components/TestModeBanner'
 import { routing } from '@/i18n/routing'
@@ -49,7 +50,9 @@ export default async function LocaleLayout({ params, children }: LayoutProps<'/[
         <NextIntlClientProvider>
           {IS_TEST_MODE && <TestModeBanner />}
           {children}
-          <Footer />
+          <Suspense fallback={null}>
+            <Footer />
+          </Suspense>
         </NextIntlClientProvider>
       </body>
     </html>
