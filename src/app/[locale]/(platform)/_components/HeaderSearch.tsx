@@ -1,8 +1,9 @@
 'use client'
 
 import { SearchIcon, XIcon } from 'lucide-react'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { SearchResults } from '@/app/[locale]/(platform)/_components/SearchResults'
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useSearch } from '@/hooks/useSearch'
 
@@ -10,6 +11,7 @@ export default function HeaderSearch() {
   const searchRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const { query, handleQueryChange, results, isLoading, showResults, clearSearch, hideResults, activeTab, setActiveTab } = useSearch()
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
   const showDropdown = showResults || isLoading.events || isLoading.profiles
   const inputBaseClass = showDropdown ? 'bg-background' : 'bg-input'
   const inputBorderClass = showDropdown ? 'border-border' : 'border-transparent'
@@ -57,20 +59,54 @@ export default function HeaderSearch() {
   }, [showResults, hideResults])
 
   return (
-    <div
-      className="relative ms-2 me-2 hidden flex-1 sm:ms-4 sm:me-0 sm:flex sm:max-w-xl"
-      ref={searchRef}
-      data-testid="header-search-container"
-    >
-      <SearchIcon className="absolute top-1/2 left-3 z-10 size-4 -translate-y-1/2 text-muted-foreground" />
-      <Input
-        type="text"
-        ref={inputRef}
-        data-testid="header-search-input"
-        placeholder={`Search ${sitename}`}
-        value={query}
-        onChange={e => handleQueryChange(e.target.value)}
-        className={`
+    <>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="shrink-0 text-muted-foreground sm:hidden"
+        onClick={() => setIsMobileOpen(true)}
+      >
+        <SearchIcon className="size-5" />
+      </Button>
+
+      {isMobileOpen && (
+        <div className="absolute inset-0 z-50 flex items-center gap-2 bg-background px-4 sm:hidden">
+          <SearchIcon className="size-4 text-muted-foreground" />
+          <Input
+            autoFocus
+            type="text"
+            placeholder={`Search ${sitename}`}
+            value={query}
+            onChange={e => handleQueryChange(e.target.value)}
+            className="h-10 flex-1 border-transparent bg-transparent shadow-none focus-visible:ring-0"
+          />
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => {
+              setIsMobileOpen(false)
+              hideResults()
+            }}
+          >
+            <XIcon className="size-5" />
+          </Button>
+        </div>
+      )}
+
+      <div
+        className="relative ms-2 me-2 hidden flex-1 sm:ms-4 sm:me-0 sm:flex sm:max-w-xl"
+        ref={searchRef}
+        data-testid="header-search-container"
+      >
+        <SearchIcon className="absolute top-1/2 left-3 z-10 size-4 -translate-y-1/2 text-muted-foreground" />
+        <Input
+          type="text"
+          ref={inputRef}
+          data-testid="header-search-input"
+          placeholder={`Search ${sitename}`}
+          value={query}
+          onChange={e => handleQueryChange(e.target.value)}
+          className={`
           h-10 w-full pr-12 pl-9 shadow-none transition-colors
           ${inputBorderClass}
           ${inputBaseClass}
@@ -78,45 +114,46 @@ export default function HeaderSearch() {
           ${inputHoverClass}
           focus-visible:border-border ${inputFocusClass} focus-visible:ring-0 focus-visible:ring-offset-0
         `}
-      />
-      {query.length > 0
-        ? (
-            <button
-              type="button"
-              className={`
-                absolute top-1/2 right-2 hidden -translate-y-1/2 items-center justify-center rounded-sm p-1
-                text-muted-foreground transition-colors
-                hover:text-foreground
+        />
+        {query.length > 0
+          ? (
+              <button
+                type="button"
+                className={`
+                  absolute top-1/2 right-2 hidden -translate-y-1/2 items-center justify-center rounded-sm p-1
+                  text-muted-foreground transition-colors
+                  hover:text-foreground
+                  sm:inline-flex
+                `}
+                onClick={() => {
+                  clearSearch()
+                  inputRef.current?.focus()
+                }}
+                aria-label="Clear search"
+              >
+                <XIcon className="size-4" />
+              </button>
+            )
+          : (
+              <span className={`
+                absolute top-1/2 right-3 hidden -translate-y-1/2 font-mono text-xs text-muted-foreground
                 sm:inline-flex
               `}
-              onClick={() => {
-                clearSearch()
-                inputRef.current?.focus()
-              }}
-              aria-label="Clear search"
-            >
-              <XIcon className="size-4" />
-            </button>
-          )
-        : (
-            <span className={`
-              absolute top-1/2 right-3 hidden -translate-y-1/2 font-mono text-xs text-muted-foreground
-              sm:inline-flex
-            `}
-            >
-              /
-            </span>
-          )}
-      {(showResults || isLoading.events || isLoading.profiles) && (
-        <SearchResults
-          results={results}
-          isLoading={isLoading}
-          activeTab={activeTab}
-          query={query}
-          onResultClick={clearSearch}
-          onTabChange={setActiveTab}
-        />
-      )}
-    </div>
+              >
+                /
+              </span>
+            )}
+        {(showResults || isLoading.events || isLoading.profiles) && (
+          <SearchResults
+            results={results}
+            isLoading={isLoading}
+            activeTab={activeTab}
+            query={query}
+            onResultClick={clearSearch}
+            onTabChange={setActiveTab}
+          />
+        )}
+      </div>
+    </>
   )
 }

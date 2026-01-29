@@ -25,7 +25,7 @@ export default async function NavigationTabs() {
   ]
 
   return (
-    <nav className="sticky top-14 z-10 border-b bg-background">
+    <nav className="sticky top-14 z-10 hidden border-b bg-background lg:block">
       <div id="navigation-main-tags" className="container scrollbar-hide flex gap-6 overflow-x-auto text-sm font-medium">
         {tags.map((tag, index) => (
           <div key={tag.slug} className="flex items-center">

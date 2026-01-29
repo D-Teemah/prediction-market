@@ -87,22 +87,27 @@ export default function HeaderMenu() {
 
       {!isAuthenticated && (
         <>
-          <Button
-            size="headerCompact"
-            variant="link"
-            className="no-underline hover:bg-accent/70 hover:no-underline"
-            data-testid="header-login-button"
-            onClick={() => open()}
-          >
-            {t('Log In')}
-          </Button>
-          <Button
-            size="headerCompact"
-            data-testid="header-signup-button"
-            onClick={() => open()}
-          >
-            {t('Sign Up')}
-          </Button>
+          {!isMobile && (
+            <>
+              <Button
+                size="headerCompact"
+                variant="link"
+                className="no-underline hover:bg-accent/70 hover:no-underline"
+                data-testid="header-login-button"
+                onClick={() => open()}
+              >
+                {t('Log In')}
+              </Button>
+              <Button
+                size="headerCompact"
+                variant="default"
+                onClick={() => open()}
+              >
+                {t('Sign Up')}
+              </Button>
+              <div className="h-6 w-px bg-border" aria-hidden="true" />
+            </>
+          )}
           <HeaderDropdownUserMenuGuest />
         </>
       )}
