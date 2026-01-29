@@ -14,7 +14,7 @@ export default function HeaderLogo() {
         width={200}
         height={40}
         priority
-        className="h-8 w-auto"
+        className="h-6 w-auto lg:h-8"
       />
     </Link>
   )

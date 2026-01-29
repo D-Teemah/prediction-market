@@ -80,8 +80,12 @@ export default function HeaderMenu() {
             </Button>
           )}
           <HeaderNotifications />
-          <div className="h-6 w-px bg-border" aria-hidden="true" />
-          <HeaderDropdownUserMenuAuth />
+          {!isMobile && (
+            <>
+              <div className="h-6 w-px bg-border" aria-hidden="true" />
+              <HeaderDropdownUserMenuAuth />
+            </>
+          )}
         </>
       )}
 
@@ -108,7 +112,7 @@ export default function HeaderMenu() {
               <div className="h-6 w-px bg-border" aria-hidden="true" />
             </>
           )}
-          <HeaderDropdownUserMenuGuest />
+          {!isMobile && <HeaderDropdownUserMenuGuest />}
         </>
       )}
     </>

@@ -9,12 +9,12 @@ import { Skeleton } from '@/components/ui/skeleton'
 export default async function Header() {
   return (
     <header className="sticky top-0 z-50 bg-background">
-      <div className="container flex h-14 items-center gap-4">
+      <div className="container flex h-14 items-center gap-2 px-2 lg:gap-4 lg:px-4">
         <Suspense fallback={<Skeleton className="size-10 rounded-md lg:hidden" />}>
           <HeaderMobileNav />
         </Suspense>
         <HeaderLogo />
-        <div className="flex flex-1 items-center gap-2">
+        <div className="flex flex-1 items-center gap-1 sm:gap-2">
           <HeaderSearch />
           <HeaderHowItWorks />
         </div>
