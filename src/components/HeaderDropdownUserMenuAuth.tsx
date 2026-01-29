@@ -6,6 +6,7 @@ import { useExtracted } from 'next-intl'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
+import { useTradingOnboarding } from '@/app/[locale]/(platform)/_providers/TradingOnboardingProvider'
 import HeaderPortfolio from '@/components/HeaderPortfolio'
 import LocaleSwitcherMenuItem from '@/components/LocaleSwitcherMenuItem'
 import ThemeSelector from '@/components/ThemeSelector'
@@ -25,6 +26,7 @@ import { useUser } from '@/stores/useUser'
 export default function HeaderDropdownUserMenuAuth() {
   const t = useExtracted('Header')
   const { disconnect } = useDisconnect()
+  const { startDepositFlow } = useTradingOnboarding()
   const user = useUser()
   const pathname = usePathname()
   const isAdmin = pathname.startsWith('/admin')
@@ -157,6 +159,12 @@ export default function HeaderDropdownUserMenuAuth() {
 
           {isMobile && (
             <>
+              <DropdownMenuSeparator />
+
+              <DropdownMenuItem onClick={startDepositFlow}>
+                {t('Deposit')}
+              </DropdownMenuItem>
+
               <DropdownMenuSeparator />
 
               <DropdownMenuItem asChild>

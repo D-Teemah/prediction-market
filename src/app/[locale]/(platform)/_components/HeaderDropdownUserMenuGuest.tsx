@@ -15,11 +15,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useAppKit } from '@/hooks/useAppKit'
+import { useIsMobile } from '@/hooks/useIsMobile'
 import { Link } from '@/i18n/navigation'
 
 export default function HeaderDropdownUserMenuGuest() {
   const t = useExtracted('Header')
   const { open } = useAppKit()
+  const isMobile = useIsMobile()
   const [menuOpen, setMenuOpen] = useState(false)
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -89,10 +91,14 @@ export default function HeaderDropdownUserMenuGuest() {
           onInteractOutside={() => setMenuOpen(false)}
           onEscapeKeyDown={() => setMenuOpen(false)}
         >
-          <DropdownMenuItem onClick={() => open()}>{t('Sign Up')}</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => open()}>{t('Log In')}</DropdownMenuItem>
+          {isMobile && (
+            <>
+              <DropdownMenuItem onClick={() => open()}>{t('Sign Up')}</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => open()}>{t('Log In')}</DropdownMenuItem>
 
-          <DropdownMenuSeparator />
+              <DropdownMenuSeparator />
+            </>
+          )}
 
           <DropdownMenuItem asChild>
             <Link href={'/' as Route}>{t('Rewards')}</Link>
