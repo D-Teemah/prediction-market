@@ -1,3 +1,5 @@
+import { vi } from 'vitest'
+
 import '@testing-library/jest-dom/vitest'
 
 if (!process.env.NEXT_PUBLIC_REOWN_APPKIT_PROJECT_ID) {
@@ -11,3 +13,17 @@ if (!process.env.SUPABASE_URL) {
 if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
   process.env.SUPABASE_SERVICE_ROLE_KEY = 'test-service-role-key'
 }
+
+// Mock ResizeObserver
+globalThis.ResizeObserver = class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+vi.mock('sonner', () => ({
+  toast: {
+    success: vi.fn(),
+    error: vi.fn(),
+  },
+}))

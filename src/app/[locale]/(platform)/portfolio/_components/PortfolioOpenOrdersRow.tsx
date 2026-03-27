@@ -91,6 +91,7 @@ export default function PortfolioOpenOrdersRow({ order }: PortfolioOpenOrdersRow
       </td>
 
       <td className="px-2 py-3 text-center text-sm font-semibold sm:px-3">
+        ₦
         {formatCurrency(totalValue)}
       </td>
 

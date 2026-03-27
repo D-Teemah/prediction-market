@@ -9,6 +9,8 @@ import HeaderNotifications from '@/app/[locale]/(platform)/_components/HeaderNot
 import { useTradingOnboarding } from '@/app/[locale]/(platform)/_providers/TradingOnboardingProvider'
 import HeaderDropdownUserMenuAuth from '@/components/HeaderDropdownUserMenuAuth'
 import HeaderPortfolio from '@/components/HeaderPortfolio'
+import LoginDialog from '@/components/LoginDialog'
+import SignupDialog from '@/components/SignupDialog'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAppKit } from '@/hooks/useAppKit'
@@ -22,7 +24,7 @@ const { useSession } = authClient
 export default function HeaderMenu() {
   const t = useExtracted('Header')
   const isMounted = useClientMounted()
-  const { open, isReady } = useAppKit()
+  const { isReady } = useAppKit()
   const { isConnected, status } = useAppKitAccount()
   const { data: session, isPending } = useSession()
   const isMobile = useIsMobile()
@@ -93,22 +95,28 @@ export default function HeaderMenu() {
         <>
           {!isMobile && (
             <>
-              <Button
-                size="headerCompact"
-                variant="link"
-                className="no-underline hover:bg-accent/70 hover:no-underline"
-                data-testid="header-login-button"
-                onClick={() => open()}
-              >
-                {t('Log In')}
-              </Button>
-              <Button
-                size="headerCompact"
-                variant="default"
-                onClick={() => open()}
-              >
-                {t('Sign Up')}
-              </Button>
+              <LoginDialog
+                trigger={(
+                  <Button
+                    size="headerCompact"
+                    variant="link"
+                    className="no-underline hover:bg-accent/70 hover:no-underline"
+                    data-testid="header-login-button"
+                  >
+                    {t('Log In')}
+                  </Button>
+                )}
+              />
+              <SignupDialog
+                trigger={(
+                  <Button
+                    size="headerCompact"
+                    variant="default"
+                  >
+                    {t('Sign Up')}
+                  </Button>
+                )}
+              />
               <div className="h-6 w-px bg-border" aria-hidden="true" />
             </>
           )}

@@ -84,7 +84,10 @@ function initializeAppKitSingleton(themeMode: 'light' | 'dark') {
       featuredWalletIds: ['c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96'],
       features: {
         analytics: process.env.NODE_ENV === 'production',
+        email: false,
+        socials: ['google', 'facebook'],
       },
+      enableWallets: false, // This hides the other wallet options in AppKit
       siweConfig: createSIWEConfig({
         signOutOnAccountChange: true,
         getMessageParams: async () => ({

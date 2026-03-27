@@ -33,8 +33,19 @@ export default function EventOrderPanelEarnings({
   buyChangePct,
   buyMultiplier,
 }: EventOrderPanelEarningsProps) {
-  const buyPayoutLabel = formatCurrency(Math.max(0, buyPayout))
-  const buyProfitLabel = formatCurrency(buyProfit)
+  function formatSignedCurrency(value: number) {
+    const abs = formatCurrency(Math.abs(value), { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    if (value > 0) {
+      return `+₦${abs}`
+    }
+    if (value < 0) {
+      return `-₦${abs}`
+    }
+    return `+₦${abs}`
+  }
+
+  const buyPayoutLabel = `₦${formatCurrency(Math.max(0, buyPayout))}`
+  const buyProfitLabel = formatSignedCurrency(buyProfit)
   const buyChangeLabel = `${buyChangePct >= 0 ? '+' : '-'}${Math.abs(buyChangePct).toFixed(0)}%`
   const buyMultiplierLabel = `${Math.max(0, buyMultiplier).toFixed(2)}x`
 
@@ -58,7 +69,7 @@ export default function EventOrderPanelEarnings({
     }
     return -100 / (decimalOdds - 1)
   })()
-  const sellProfitLabel = formatCurrency(0)
+  const sellProfitLabel = formatSignedCurrency(0)
   const sellChangeLabel = '+0%'
   const sellMultiplierLabel = decimalOdds != null ? `${decimalOdds.toFixed(3)}x` : '—'
 
@@ -121,9 +132,7 @@ export default function EventOrderPanelEarnings({
                     <div className="flex items-center justify-between gap-3">
                       <span>Profit</span>
                       <span className="text-base font-bold text-yes">
-                        {side === ORDER_SIDE.SELL
-                          ? sellProfitLabel
-                          : (buyProfit >= 0 ? `+${buyProfitLabel}` : buyProfitLabel)}
+                        {side === ORDER_SIDE.SELL ? sellProfitLabel : buyProfitLabel}
                       </span>
                     </div>
                     <div className="flex items-center justify-between gap-3">
@@ -191,8 +200,8 @@ export default function EventOrderPanelEarnings({
                         <span>Price</span>
                       </div>
                       <span className="text-base font-bold">
+                        ₦
                         {(effectivePriceCents ?? 0).toFixed(1)}
-                        ¢
                       </span>
                     </div>
                     <div className="flex items-center justify-between gap-3">

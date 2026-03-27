@@ -25,8 +25,8 @@ interface EventOrderPanelInputProps {
   shouldShake?: boolean
 }
 
-const BUY_CHIPS_DESKTOP = ['+$5', '+$25', '+$100']
-const BUY_CHIPS_MOBILE = ['+$1', '+$20', '+$100']
+const BUY_CHIPS_DESKTOP = ['+₦500', '+₦2500', '+₦10000']
+const BUY_CHIPS_MOBILE = ['+₦100', '+₦2000', '+₦10000']
 const QUICK_BUTTON_CLASS = `
   h-8 rounded-md bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground transition-colors
   hover:bg-muted/80
@@ -163,7 +163,7 @@ export default function EventOrderPanelInput({
   const formattedAmount = formatDisplayAmount(amount)
   const inputValue = side === ORDER_SIDE.SELL
     ? formattedAmount
-    : formattedAmount ? `$${formattedAmount}` : ''
+    : formattedAmount ? `₦${formattedAmount}` : ''
   return (
     <>
       {isMobile
@@ -195,7 +195,7 @@ export default function EventOrderPanelInput({
                       amountSizeClass,
                       shouldShake && 'animate-order-shake',
                     )}
-                    placeholder={side === ORDER_SIDE.SELL ? '0' : '$0.00'}
+                    placeholder={side === ORDER_SIDE.SELL ? '0' : '₦0.00'}
                     value={inputValue}
                     onChange={e => handleInputChange(e.target.value)}
                     onBlur={e => handleBlur(e.target.value)}
@@ -234,7 +234,7 @@ export default function EventOrderPanelInput({
                             `}
                             onClick={handleBalanceClick}
                           >
-                            Balance $
+                            Balance ₦
                             {formattedBalanceText}
                           </button>
                         )}
@@ -255,7 +255,7 @@ export default function EventOrderPanelInput({
                     amountSizeClass,
                     shouldShake && 'animate-order-shake',
                   )}
-                  placeholder={side === ORDER_SIDE.SELL ? '0' : '$0.00'}
+                  placeholder={side === ORDER_SIDE.SELL ? '0' : '₦0.00'}
                   value={inputValue}
                   onChange={e => handleInputChange(e.target.value)}
                   onBlur={e => handleBlur(e.target.value)}

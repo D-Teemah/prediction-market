@@ -88,7 +88,7 @@ export default function EventMetaInformation({ event }: EventMetaInformationProp
         maximumFractionDigits: 2,
       })
     : '0.00'
-  const volumeLabel = `$${formattedVolume} Vol.`
+  const volumeLabel = `₦${formattedVolume} Vol.`
 
   const maybeEndDate = event.end_date ? new Date(event.end_date) : null
   const expiryDate = maybeEndDate && !Number.isNaN(maybeEndDate.getTime()) ? maybeEndDate : null

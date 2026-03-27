@@ -763,7 +763,7 @@ function ResolvedMarketRow({
               {market.short_title || market.title}
             </div>
             <div className="text-sm text-muted-foreground">
-              $
+              ₦
               {resolvedVolume.toLocaleString('en-US', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,

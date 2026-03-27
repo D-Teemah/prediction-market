@@ -506,21 +506,37 @@ export default function AdminCreateEventForm() {
         })),
       }
 
-      console.log('Event data prepared (validation only):', eventData)
+      // Instead of formData, we'll use JSON for now and assume icons are handled
+      // or we can implement base64 encoding if needed.
+      // For a robust implementation, image upload should go to Supabase storage first.
 
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      const response = await fetch('/admin/api/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(eventData),
+      })
 
-      toast.success('Event validated successfully! 🎉')
-      toast.info('Ready for implementation - data not saved yet')
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Failed to create event')
+      }
+
+      const result = await response.json()
+
+      console.log('Event data saved:', result)
+
+      toast.success('Event created successfully! 🎉')
 
       setForm(createInitialForm())
       setEventIconFile(null)
       setMarketIconFiles({})
       setSlugValidationState('idle')
     }
-    catch (error) {
+    catch (error: any) {
       console.error('Error validating event:', error)
-      toast.error('Error validating event. Please try again.')
+      toast.error(error.message || 'Error creating event. Please try again.')
     }
     finally {
       setIsLoading(false)
@@ -831,41 +847,38 @@ export default function AdminCreateEventForm() {
       <Card className="bg-background">
         <CardContent className="pt-8 pb-8">
           <div className="flex items-start gap-3">
-            <AlertCircle className="mt-0.5 size-5 text-no" />
+            <AlertCircle className="mt-0.5 size-5 text-amber-500" />
             <div className="space-y-2">
-              <h4 className="font-semibold">Development Status - Not Ready for Production</h4>
+              <h4 className="font-semibold">Development Status - Backend Integrated</h4>
               <ul className="space-y-1 text-sm text-muted-foreground">
                 <li>
-                  • ❌
+                  • ✅
                   {' '}
-                  <strong>Database integration not implemented</strong>
+                  <strong>Database integration implemented</strong>
                   {' '}
-                  - events are not saved
+                  - events are now saved via internal API
                 </li>
                 <li>
-                  • ❌
+                  • ⚠️
+                  {' '}
+                  <strong>Image upload</strong>
+                  {' '}
+                  - files are passed as names, needs Supabase storage hookup for full support
+                </li>
+                <li>
+                  • ⚠️
                   {' '}
                   <strong>Blockchain deployment not implemented</strong>
                   {' '}
                   - no smart contract interaction
                 </li>
                 <li>
-                  • ❌
-                  {' '}
-                  <strong>Image upload not implemented</strong>
-                  {' '}
-                  - files are not stored anywhere
-                </li>
-                <li>
-                  • ❌
+                  • ⚠️
                   {' '}
                   <strong>UMA oracle integration pending</strong>
                   {' '}
                   - no resolution mechanism
                 </li>
-                <li>• ⚠️ This form only validates data and shows preview in console</li>
-                <li>• ⚠️ All backend functionality needs to be implemented</li>
-                <li>• ✅ UI and validation logic are complete</li>
               </ul>
             </div>
           </div>
@@ -878,13 +891,13 @@ export default function AdminCreateEventForm() {
             ? (
                 <>
                   <Loader2 className="mr-2 size-4 animate-spin" />
-                  Validating...
+                  Creating...
                 </>
               )
             : (
                 <>
                   <CheckCircle2 className="mr-2 size-4" />
-                  Validate Event Data
+                  Create Event
                 </>
               )}
         </Button>

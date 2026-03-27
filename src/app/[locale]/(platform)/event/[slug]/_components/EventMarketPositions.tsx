@@ -100,17 +100,17 @@ function MarketPositionRow({
   const averageLabel = formatCentsLabel(averagePriceDollars, { fallback: '—' })
   const totalValue = toNumber(position.currentValue)
     ?? Number(fromMicro(String(position.total_position_value ?? 0), 2))
-  const valueLabel = formatCurrency(Math.max(0, totalValue), {
+  const valueLabel = `₦${formatCurrency(Math.max(0, totalValue), {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  })
+  })}`
   const baseCostValue = toNumber(position.totalBought)
     ?? toNumber(position.initialValue)
     ?? (typeof position.total_position_cost === 'number'
       ? Number(fromMicro(String(position.total_position_cost), 2))
       : null)
   const costLabel = baseCostValue != null
-    ? formatCurrency(baseCostValue, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    ? `₦${formatCurrency(baseCostValue, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
     : null
   const realizedPnlValue = toNumber(position.realizedPnl)
     ?? toNumber(position.cashPnl)
@@ -131,10 +131,10 @@ function MarketPositionRow({
   const percentLabel = formatPercent(Math.abs(normalizedPercent), { digits: percentDigits })
   const isPositive = totalProfitLossValue >= 0
   const isNeutralReturn = Math.abs(totalProfitLossValue) < 0.005
-  const neutralReturnLabel = formatCurrency(Math.abs(totalProfitLossValue), {
+  const neutralReturnLabel = `₦${formatCurrency(Math.abs(totalProfitLossValue), {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  })
+  })}`
   const displayedReturnValue = isNeutralReturn
     ? neutralReturnLabel
     : `${isPositive ? '+' : '-'}${neutralReturnLabel}`
@@ -146,12 +146,12 @@ function MarketPositionRow({
   function formatSignedCurrency(value: number) {
     const abs = formatCurrency(Math.abs(value), { minimumFractionDigits: 2, maximumFractionDigits: 2 })
     if (value > 0) {
-      return `+${abs}`
+      return `+₦${abs}`
     }
     if (value < 0) {
-      return `-${abs}`
+      return `-₦${abs}`
     }
-    return `+${abs}`
+    return `+₦${abs}`
   }
 
   const unrealizedLabel = formatSignedCurrency(unrealizedValue)

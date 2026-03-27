@@ -7,15 +7,15 @@ import MarketSection from '@/app/[locale]/(platform)/(home)/_components/MarketSe
 
 interface HomeClientProps {
   featuredEvents: Event[]
-  basketballEvents: Event[]
-  hockeyEvents: Event[]
+  politicsEvents: Event[]
+  entertainmentEvents: Event[]
   trendingEvents: Event[]
 }
 
 export default function HomeClient({
   featuredEvents,
-  basketballEvents,
-  hockeyEvents,
+  politicsEvents,
+  entertainmentEvents,
   trendingEvents,
 }: HomeClientProps) {
   // Note: We are temporarily removing FilterToolbar and EventsGrid to match the requested layout.
@@ -29,19 +29,19 @@ export default function HomeClient({
         )}
 
         <MarketSection
-          title="Pro basketball"
-          tag="basketball"
-          events={basketballEvents}
+          title="Nigerian Politics"
+          tag="politics"
+          events={politicsEvents}
         />
 
         <MarketSection
-          title="Pro hockey"
-          tag="hockey"
-          events={hockeyEvents}
+          title="Entertainment & Culture"
+          tag="entertainment"
+          events={entertainmentEvents}
         />
 
         {/* Fallback or additional section if others are empty */}
-        {basketballEvents.length === 0 && hockeyEvents.length === 0 && (
+        {politicsEvents.length === 0 && entertainmentEvents.length === 0 && (
           <MarketSection
             title="Trending"
             tag="trending"
