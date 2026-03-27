@@ -325,7 +325,7 @@ export default function EventOrderPanelForm({ event, isMobile }: EventOrderPanel
   const avgSellPriceDollars = Number.isFinite(sellOrderSnapshot.priceCents)
     ? sellOrderSnapshot.priceCents / 100
     : null
-  const avgSellPriceLabel = formatCentsLabel(avgSellPriceDollars, { fallback: '—' })
+  const avgSellPriceLabel = formatCentsLabel(avgSellPriceDollars, { fallback: '—' }).replace('₦', '₦') // Ensure it uses Naira
   const outcomeFallbackBuyPriceCents = typeof state.outcome?.buy_price === 'number'
     ? Number((state.outcome.buy_price * 100).toFixed(1))
     : null
@@ -386,14 +386,14 @@ export default function EventOrderPanelForm({ event, isMobile }: EventOrderPanel
   const avgBuyPriceDollars = typeof currentBuyPriceCents === 'number' && Number.isFinite(currentBuyPriceCents)
     ? currentBuyPriceCents / 100
     : null
-  const avgBuyPriceLabel = formatCentsLabel(avgBuyPriceDollars, { fallback: '—' })
+  const avgBuyPriceLabel = formatCentsLabel(avgBuyPriceDollars, { fallback: '—' }).replace('₦', '₦') // Ensure it uses Naira
   const avgBuyPriceCentsValue = typeof currentBuyPriceCents === 'number' && Number.isFinite(currentBuyPriceCents)
     ? currentBuyPriceCents
     : null
   const avgSellPriceCentsValue = Number.isFinite(sellOrderSnapshot.priceCents) && sellOrderSnapshot.priceCents > 0
     ? sellOrderSnapshot.priceCents
     : null
-  const sellAmountLabel = formatCurrency(sellAmountValue)
+  const sellAmountLabel = `₦${formatCurrency(sellAmountValue)}`
   useEffect(() => {
     if (!isLimitOrder || limitSharesNumber >= MIN_LIMIT_ORDER_SHARES) {
       setShowLimitMinimumWarning(false)
@@ -890,7 +890,7 @@ export default function EventOrderPanelForm({ event, isMobile }: EventOrderPanel
                           `}
                         >
                           <TriangleAlertIcon className="size-4" />
-                          Market buys must be at least $1
+                          Market buys must be at least ₦1,500
                         </div>
                       )}
                       {showNoLiquidityWarning && (

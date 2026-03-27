@@ -213,8 +213,8 @@ function FeaturedEventContent({ event }: { event: Event }) {
                       {outcome.outcome_text}
                     </span>
                     <span className={cn('rounded px-2 py-0.5 font-mono text-sm', priceBadgeColor)}>
-                      {chance}
-                      ¢
+                      ₦
+                      {(chance / 100).toFixed(2)}
                     </span>
                   </Link>
                 </Button>

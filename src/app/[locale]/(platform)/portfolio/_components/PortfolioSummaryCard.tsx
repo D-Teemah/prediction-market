@@ -57,7 +57,7 @@ export default function PortfolioSummaryCard() {
               <ellipse cx="9.5" cy="5.49951" rx="2.5" ry="1.5" fill="#3AB549"></ellipse>
             </svg>
             <span>
-              $
+              ₦
               {balance.text}
             </span>
           </div>
@@ -65,7 +65,7 @@ export default function PortfolioSummaryCard() {
 
         <div className="mb-2">
           <div className="text-3xl font-bold text-foreground">
-            $
+            ₦
             {formattedValue}
           </div>
         </div>
@@ -73,7 +73,7 @@ export default function PortfolioSummaryCard() {
         <div className="mb-6">
           <div className={`flex items-center gap-1 text-sm ${isPositive ? 'text-yes' : 'text-no'}`}>
             <span>
-              $
+              ₦
               {dailyChange.toFixed(2)}
             </span>
             <span>

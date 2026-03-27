@@ -354,7 +354,7 @@ function MarketOutcomeMetaInformation({ market }: { market: Market }) {
         maximumFractionDigits: 2,
       })
     : '0.00'
-  const volumeLabel = `$${formattedVolume} Vol.`
+  const volumeLabel = `₦${formattedVolume} Vol.`
   const expiryTooltip = 'This is estimated end date.<br>See rules below for specific resolution details.'
   const maybeEndDate = market.end_time ? new Date(market.end_time) : null
   const expiryDate = maybeEndDate && !Number.isNaN(maybeEndDate.getTime()) ? maybeEndDate : null

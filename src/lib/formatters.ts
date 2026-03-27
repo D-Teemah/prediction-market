@@ -1,7 +1,7 @@
 import { MICRO_UNIT } from '@/lib/constants'
 
-const DEFAULT_LOCALE = 'en-US'
-const DEFAULT_CURRENCY = 'USD'
+const DEFAULT_LOCALE = 'en-NG'
+const DEFAULT_CURRENCY = 'NGN'
 
 export const priceFormatter = new Intl.NumberFormat(DEFAULT_LOCALE, {
   minimumFractionDigits: 0,
@@ -109,6 +109,16 @@ interface CurrencyFormatOptions {
   includeSymbol?: boolean
 }
 
+// Make formatCurrency async to fetch the rate, or provide a sync wrapper if rate is pre-fetched
+// For UI components, it's better to fetch rate once in a provider and pass it down,
+// but for simple conversion here we can default to a standard rate or use an async version.
+
+// Note: Changing this to async would break many synchronous React renders.
+// A better approach is to assume the value passed is ALREADY converted,
+// OR we just use the NGN symbol and let the backend/components handle the math.
+// For now, let's keep it sync and format as NGN. If you need dynamic conversion on the fly,
+// it should be done before passing to formatCurrency.
+
 export function formatCurrency(
   value: number | null | undefined,
   options: CurrencyFormatOptions = {},
@@ -146,16 +156,16 @@ export function formatPercent(value: number, options: PercentFormatOptions = {})
 
 export function formatVolume(volume: number): string {
   if (!Number.isFinite(volume) || volume < 0) {
-    return '$0'
+    return '₦0'
   }
 
   if (volume >= MICRO_UNIT) {
-    return `$${(volume / MICRO_UNIT).toFixed(1)}M`
+    return `₦${(volume / MICRO_UNIT).toFixed(1)}M`
   }
   if (volume >= 1_000) {
-    return `$${(volume / 1_000).toFixed(0)}k`
+    return `₦${(volume / 1_000).toFixed(0)}k`
   }
-  return `$${volume.toFixed(0)}`
+  return `₦${volume.toFixed(0)}`
 }
 
 const COMPACT_THRESHOLD = 100_000
@@ -190,11 +200,11 @@ export function formatCompactCurrency(value: number) {
   const abs = Math.abs(value)
   if (abs >= COMPACT_MILLION) {
     const compact = (abs / COMPACT_MILLION).toFixed(1).replace(/\.0$/, '')
-    return `${value < 0 ? '-' : ''}$${compact}M`
+    return `${value < 0 ? '-' : ''}₦${compact}M`
   }
   if (abs >= COMPACT_THRESHOLD) {
     const compact = Math.round(abs / 1_000).toLocaleString(DEFAULT_LOCALE)
-    return `${value < 0 ? '-' : ''}$${compact}k`
+    return `${value < 0 ? '-' : ''}₦${compact}k`
   }
 
   return formatCurrency(value)
@@ -289,11 +299,11 @@ export function formatCentsLabel(
 
   if (numeric <= 1) {
     const cents = toCents(numeric)
-    return cents === null ? fallback : `${priceFormatter.format(cents)}¢`
+    return cents === null ? fallback : `₦${priceFormatter.format(cents)}`
   }
 
   const cents = Number(numeric.toFixed(1))
-  return `${priceFormatter.format(cents)}¢`
+  return `₦${priceFormatter.format(cents)}`
 }
 
 interface SharePriceFormatOptions extends CentsFormatOptions {
@@ -304,7 +314,7 @@ export function formatSharePriceLabel(
   value: number | string | null | undefined,
   options: SharePriceFormatOptions = {},
 ) {
-  const fallback = options.fallback ?? '50.0¢'
+  const fallback = options.fallback ?? '₦50.0'
 
   if (value === null || value === undefined) {
     return fallback

@@ -42,7 +42,7 @@ export default function EventOrderPanelMobileMarketInfo({
               ? <Skeleton className="inline-block h-3 w-10 align-middle" />
               : (
                   <>
-                    $
+                    ₦
                     {balanceText}
                   </>
                 )}

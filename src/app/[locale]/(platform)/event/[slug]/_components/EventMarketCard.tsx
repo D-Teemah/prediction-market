@@ -148,7 +148,7 @@ function EventMarketCardComponent({
                     {market.title}
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    $
+                    ₦
                     {resolvedVolume?.toLocaleString('en-US', {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
@@ -185,7 +185,7 @@ function EventMarketCardComponent({
                 {yesOutcomeText}
               </span>
               <span className="shrink-0 text-base font-bold">
-                {formatCentsLabel(yesPriceValue)}
+                {formatCentsLabel(yesPriceValue).replace('₦', '₦')}
               </span>
             </Button>
             <Button
@@ -206,7 +206,7 @@ function EventMarketCardComponent({
                 {noOutcomeText}
               </span>
               <span className="shrink-0 text-base font-bold">
-                {formatCentsLabel(noPriceValue)}
+                {formatCentsLabel(noPriceValue).replace('₦', '₦')}
               </span>
             </Button>
           </div>
@@ -239,7 +239,7 @@ function EventMarketCardComponent({
                     {market.title}
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    $
+                    ₦
                     {resolvedVolume?.toLocaleString('en-US', {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
@@ -278,7 +278,7 @@ function EventMarketCardComponent({
                   {yesOutcomeText}
                 </span>
                 <span className="shrink-0 text-base font-bold">
-                  {formatCentsLabel(yesPriceValue)}
+                  {formatCentsLabel(yesPriceValue).replace('₦', '₦')}
                 </span>
               </Button>
 
@@ -300,7 +300,7 @@ function EventMarketCardComponent({
                   {noOutcomeText}
                 </span>
                 <span className="shrink-0 text-base font-bold">
-                  {formatCentsLabel(noPriceValue)}
+                  {formatCentsLabel(noPriceValue).replace('₦', '₦')}
                 </span>
               </Button>
             </div>

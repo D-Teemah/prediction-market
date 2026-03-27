@@ -9,6 +9,8 @@ import { useParams } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { useTradingOnboarding } from '@/app/[locale]/(platform)/_providers/TradingOnboardingProvider'
 import HeaderPortfolio from '@/components/HeaderPortfolio'
+import LoginDialog from '@/components/LoginDialog'
+import SignupDialog from '@/components/SignupDialog'
 import ThemeSelector from '@/components/ThemeSelector'
 import { Button } from '@/components/ui/button'
 import {
@@ -19,7 +21,6 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer'
 import UserInfoSection from '@/components/UserInfoSection'
-import { useAppKit } from '@/hooks/useAppKit'
 import { Link, usePathname, useRouter } from '@/i18n/navigation'
 import { useUser } from '@/stores/useUser'
 
@@ -34,7 +35,6 @@ interface HeaderMobileNavClientProps {
 export default function HeaderMobileNavClient({ tags }: HeaderMobileNavClientProps) {
   const t = useExtracted('Header')
   const [open, setOpen] = useState(false)
-  const { open: openAppKit } = useAppKit()
   const { isConnected } = useAppKitAccount()
   const { disconnect } = useDisconnect()
   const { startDepositFlow } = useTradingOnboarding()
@@ -127,12 +127,20 @@ export default function HeaderMobileNavClient({ tags }: HeaderMobileNavClientPro
               )
             : (
                 <div className="flex flex-col gap-3 border-b p-4">
-                  <Button onClick={() => openAppKit()} className="w-full">
-                    {t('Sign Up')}
-                  </Button>
-                  <Button variant="outline" onClick={() => openAppKit()} className="w-full">
-                    {t('Log In')}
-                  </Button>
+                  <SignupDialog
+                    trigger={(
+                      <Button className="w-full">
+                        {t('Sign Up')}
+                      </Button>
+                    )}
+                  />
+                  <LoginDialog
+                    trigger={(
+                      <Button variant="outline" className="w-full">
+                        {t('Log In')}
+                      </Button>
+                    )}
+                  />
                 </div>
               )}
 

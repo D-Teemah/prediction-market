@@ -34,7 +34,7 @@ export default function EventOrderPanelOutcomeButton({
         {label}
       </span>
       <span className="shrink-0 text-base font-bold">
-        {formatCentsLabel(price)}
+        {formatCentsLabel(price).replace('₦', '₦')}
       </span>
     </Button>
   )

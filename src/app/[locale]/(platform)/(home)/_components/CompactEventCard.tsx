@@ -24,10 +24,10 @@ export default function CompactEventCard({ event }: CompactEventCardProps) {
   // Volume
   const volume = formatCompactShares(event.volume)
 
-  // Sort outcomes by probability (descending) or index
-  // For sports (Team A vs Team B), usually we show both.
-  const outcomes = primaryMarket.outcomes
-    .slice(0, 2) // Show top 2 for compact view? Or all? Image shows 2 for basketball.
+  // Sort outcomes by probability (descending)
+  const outcomes = [...primaryMarket.outcomes]
+    .sort((a, b) => (b.buy_price ?? 0) - (a.buy_price ?? 0))
+    .slice(0, 3) // Show up to top 3 outcomes for better context
 
   return (
     <Link
@@ -71,7 +71,7 @@ export default function CompactEventCard({ event }: CompactEventCardProps) {
           // `Outcome` type has `buy_price`, `sell_price`.
 
           // Use brand colors: Primary (Green), Destructive (Red), Foreground (Black)
-          const chance = (outcome.buy_price ?? 0) * 100
+          const chance = Math.round((outcome.buy_price ?? 0) * 100) || 10 // Fallback width if no price
           const colorClass = index === 0 ? 'bg-primary' : (index === 1 ? 'bg-destructive' : 'bg-[#0F172A]')
 
           return (
